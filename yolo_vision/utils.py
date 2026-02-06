@@ -31,8 +31,8 @@ def parse_predictions(predictions):
 
     return True, [
         [
-            float(score),
             int(cls_id),
+            float(score),
             float(cx),
             float(cy),
             float(w),
