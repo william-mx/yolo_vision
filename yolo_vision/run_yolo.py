@@ -67,7 +67,7 @@ class YoloVision(Node):
             self.detection2d_pub = self.create_publisher(Detection2DArray, '/detections_2d', qos_profile)
 
         if self.publish_plot:
-            self.im_publisher = self.create_publisher(CompressedImage, '/result', qos_profile)
+            self.im_publisher = self.create_publisher(CompressedImage, '/yolo_overlay', qos_profile)
 
         if self.publish_mask:
             self.mask_publisher = self.create_publisher(CompressedImage, '/mask', qos_profile)
