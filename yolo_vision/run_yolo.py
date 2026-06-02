@@ -106,9 +106,11 @@ class YoloVision(Node):
 
         # ros image to numpy
         image, timestamp_unix = image_to_np(msg)
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
         # run prediction
-        predictions = self.model(image, verbose=False)
+        predictions = self.model(image, verbose=False, conf=0.4) # classes=[2,3,4,6,11,12,13]
+        # predictions = self.model.track(image, verbose=False, persist=True, tracker="bytetrack.yaml")
 
         # Parse + publish detections and/or mask only if needed
         if self.publish_detections or self.publish_mask:
@@ -124,7 +126,8 @@ class YoloVision(Node):
 
         # Publish Debug Plot (Compressed JPEG)
         if self.publish_plot:
-            plot = predictions[0].plot()
+            p = predictions[0]
+            plot = p.plot()
             plot_msg = np_to_compressedimage(plot, timestamp_unix)
             self.im_publisher.publish(plot_msg)
 
@@ -132,7 +135,8 @@ class YoloVision(Node):
 # ─── Main ────────────────────────────────────────────────
 def main(args=None):
     pkg_path = get_package_prefix('yolo_vision').replace('install', 'src')
-    model_path = pkg_path + '/models'
+    run = 'good-morning-13'
+    model_path = pkg_path + f'/models/{run}'
     model_name = 'best.pt'
 
     rclpy.init(args=args)
