@@ -14,6 +14,9 @@ ENV/
 env/
 *.log
 
+# ROS bag files
+bagfiles/
+
 # === ROS / colcon ===
 build/
 install/
@@ -52,4 +55,4 @@ ament_cmake_environment_hooks/
 *.swo
 *.bak
 *.tmp
-*.pt
+
